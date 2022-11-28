@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/Gideon-isa/bookings/pkg/config"
-	"github.com/Gideon-isa/bookings/pkg/models"
+	"github.com/Gideon-isa/bookings/internal/config"
+	"github.com/Gideon-isa/bookings/internal/models"
 	"github.com/justinas/nosurf"
 )
 

@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Gideon-isa/bookings/pkg/config"
-	"github.com/Gideon-isa/bookings/pkg/handlers"
-	"github.com/Gideon-isa/bookings/pkg/render"
+	"github.com/Gideon-isa/bookings/internal/config"
+	"github.com/Gideon-isa/bookings/internal/handlers"
+	"github.com/Gideon-isa/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 
