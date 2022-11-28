@@ -10,6 +10,7 @@ import (
 
 	"github.com/Gideon-isa/bookings/pkg/config"
 	"github.com/Gideon-isa/bookings/pkg/models"
+	"github.com/justinas/nosurf"
 )
 
 var functions = template.FuncMap{}
@@ -21,8 +22,14 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
+// AddDedault adds data for all template
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(r)
+	return td
+}
+
 // RenderTemplate renders template using html/template
-func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 	// tc: A declare template.Template with nil as value
 	// does not contain those templates
 	var tc map[string]*template.Template
@@ -40,13 +47,20 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData)
 
 	buf := new(bytes.Buffer)
 
-	_ = t.Execute(buf, td)
+	td = AddDefaultData(td, r)
 
-	_, err := buf.WriteTo(w)
+	err := t.Execute(buf, td)
+
 	if err != nil {
-		fmt.Println("Error writing template to browser")
+		log.Fatal(err)
+	}
+	_, err = buf.WriteTo(w)
+	if err != nil {
+		log.Println(err)
+		fmt.Println("Error writing template to browser", err)
 	}
 
+	return err
 }
 
 // CreateTemplateCache creates a template cache as a map
