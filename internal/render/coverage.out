@@ -1,0 +1,25 @@
+mode: set
+github.com/Gideon-isa/bookings/internal/render/render.go:23.40,25.2 1 1
+github.com/Gideon-isa/bookings/internal/render/render.go:28.84,34.2 5 1
+github.com/Gideon-isa/bookings/internal/render/render.go:37.105,42.18 2 1
+github.com/Gideon-isa/bookings/internal/render/render.go:48.2,49.9 2 1
+github.com/Gideon-isa/bookings/internal/render/render.go:54.2,60.16 4 1
+github.com/Gideon-isa/bookings/internal/render/render.go:63.2,64.16 2 1
+github.com/Gideon-isa/bookings/internal/render/render.go:70.2,70.12 1 1
+github.com/Gideon-isa/bookings/internal/render/render.go:42.18,44.3 1 0
+github.com/Gideon-isa/bookings/internal/render/render.go:44.8,46.3 1 1
+github.com/Gideon-isa/bookings/internal/render/render.go:49.9,52.3 2 0
+github.com/Gideon-isa/bookings/internal/render/render.go:60.16,62.3 1 0
+github.com/Gideon-isa/bookings/internal/render/render.go:64.16,68.3 3 0
+github.com/Gideon-isa/bookings/internal/render/render.go:74.67,80.16 3 1
+github.com/Gideon-isa/bookings/internal/render/render.go:84.2,84.29 1 1
+github.com/Gideon-isa/bookings/internal/render/render.go:110.2,110.21 1 1
+github.com/Gideon-isa/bookings/internal/render/render.go:80.16,82.3 1 0
+github.com/Gideon-isa/bookings/internal/render/render.go:84.29,88.17 3 1
+github.com/Gideon-isa/bookings/internal/render/render.go:92.3,93.17 2 1
+github.com/Gideon-isa/bookings/internal/render/render.go:97.3,97.23 1 1
+github.com/Gideon-isa/bookings/internal/render/render.go:104.3,104.21 1 1
+github.com/Gideon-isa/bookings/internal/render/render.go:88.17,90.4 1 0
+github.com/Gideon-isa/bookings/internal/render/render.go:93.17,95.4 1 0
+github.com/Gideon-isa/bookings/internal/render/render.go:97.23,99.18 2 1
+github.com/Gideon-isa/bookings/internal/render/render.go:99.18,101.5 1 0
