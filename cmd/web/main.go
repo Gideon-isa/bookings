@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/Gideon-isa/bookings/internal/config"
 	"github.com/Gideon-isa/bookings/internal/handlers"
+	"github.com/Gideon-isa/bookings/internal/helpers"
 	"github.com/Gideon-isa/bookings/internal/models"
 	"github.com/Gideon-isa/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
@@ -17,7 +19,10 @@ import (
 const portNumber string = ":8080"
 
 var app config.AppConfig
+
 var session *scs.SessionManager
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 func main() {
 	err := run()
@@ -42,10 +47,15 @@ func run() error {
 
 	// What am I doing to put in the session
 	gob.Register(models.Reservation{})
-	var app config.AppConfig
 
 	// change this to true when in production
 	app.InProduction = false
+
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
 
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
@@ -71,5 +81,6 @@ func run() error {
 
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
+	helpers.NewHelpers(&app)
 	return nil
 }

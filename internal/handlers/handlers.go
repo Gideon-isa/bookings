@@ -3,11 +3,11 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/Gideon-isa/bookings/internal/config"
 	"github.com/Gideon-isa/bookings/internal/forms"
+	"github.com/Gideon-isa/bookings/internal/helpers"
 	"github.com/Gideon-isa/bookings/internal/models"
 	"github.com/Gideon-isa/bookings/internal/render"
 )
@@ -34,26 +34,13 @@ func NewHandlers(r *Respository) {
 
 // Home is the home handler
 func (m *Respository) Home(w http.ResponseWriter, r *http.Request) {
-	remoteIP := r.RemoteAddr
-	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About is the about page
 func (m *Respository) About(w http.ResponseWriter, r *http.Request) {
-	//perform some logic
-	stringMap := make(map[string]string)
-	stringMap["test"] = "Hello, again."
-
-	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
-
-	//store the remoteIp in the stringMap
-	stringMap["remote_ip"] = remoteIP
-
 	// Send the data to the template
-	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{
-		StringMap: stringMap,
-	})
+	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{})
 }
 
 // Reservation renders the make a reservation page and displays form
@@ -72,7 +59,7 @@ func (m *Respository) Reservation(w http.ResponseWriter, r *http.Request) {
 func (m *Respository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
 		return
 	}
 	reservation := models.Reservation{
@@ -143,7 +130,8 @@ func (m *Respository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 
 	out, err := json.MarshalIndent(resp, "", "     ")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
+		return
 	}
 	//log.Println(string(out))
 	w.Write(out)
@@ -158,7 +146,7 @@ func (m *Respository) Contact(w http.ResponseWriter, r *http.Request) {
 func (m *Respository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 	if !ok {
-		log.Println("cannot get the item from session")
+		m.App.ErrorLog.Println("cannot get the item from session")
 		m.App.Session.Put(r.Context(), "error", "Can't get reservation from session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
